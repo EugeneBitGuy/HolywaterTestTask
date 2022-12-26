@@ -13,6 +13,6 @@ public class AutoScroll : MonoBehaviour
     void Update()
     {
         if (!scrollComponent.isManualScroll)
-            scrollComponent.content.position += Vector3.left;
+            scrollComponent.content.position += Vector3.left / 5;
     }
 }
