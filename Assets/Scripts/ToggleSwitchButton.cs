@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class ToggleSwitchButton : Button
 {
+
+    public Sprite[] stateSprites;
     public bool State { get; private set; }
 
     protected override void Start()
@@ -26,6 +28,6 @@ public class ToggleSwitchButton : Button
 
     private void BrushImage(bool state)
     {
-        GetComponent<Image>().DOColor(state ? Color.white : Color.grey, 0.5f);
+        GetComponent<Image>().sprite = stateSprites[state ? 0 : 1];
     }
 }

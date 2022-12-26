@@ -19,16 +19,8 @@ public class SettingsPanel : MonoBehaviour
     {
         closeButton.onClick.AddListener(() =>
         {
-            GetComponent<Image>().DOFade(0, 0.5f);
-            foreach (var imagesInChilds in GetComponentsInChildren<Image>())
-            {
-                imagesInChilds.DOFade(0, 0.5f);
-            }
-            foreach (var textInChilds in GetComponentsInChildren<TextMeshProUGUI>())
-            {
-                textInChilds.DOFade(0, 0.5f);
-            }
-
+            
+            SwitchVisibility(false);
             StartCoroutine(SetActiveWithDelay(false, 0.5f));
         });
         
@@ -58,4 +50,14 @@ public class SettingsPanel : MonoBehaviour
     {
         mixer.DOSetFloat("SFX", state ? 0 : -80, 0.2f);
     }
+
+    public void SwitchVisibility(bool isVisible)
+    {
+        var fadeValue = isVisible ? 1 : 0;
+
+        GetComponent<CanvasGroup>().DOFade(fadeValue, 0.5f);
+    }
 }
+
+
+

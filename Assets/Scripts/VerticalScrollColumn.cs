@@ -9,19 +9,17 @@ using UnityEngine.UI;
 public class VerticalScrollColumn : MonoBehaviour
 {
     [SerializeField] private VerticalScrollElement _elementPrefab;
-    [SerializeField] private int numberOfColumnElements;
-    private List<VerticalScrollElement> currentElements = new List<VerticalScrollElement>();
-    private void Start()
+    public List<VerticalScrollElement> currentElements = new List<VerticalScrollElement>();
+    public int columnIndex;
+
+    public void InstantiateElement(VerticalElementModel model)
     {
-        for (int i = 0; i < numberOfColumnElements; i++)
-        {
-            var instantedElement = Instantiate(_elementPrefab, this.transform);
-            var index = i;
-            currentElements.Add(instantedElement);
-            instantedElement.GetComponent<Button>().onClick.AddListener(() => DestroyElement(currentElements.IndexOf(instantedElement)));
-
-        }
-
+        var element = Instantiate(_elementPrefab, transform);
+        element.model = model;
+        currentElements.Add(element);
+        element.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Images/VerticalImages/{model.imageName}");
+        element.GetComponent<Button>().onClick.AddListener(() => DestroyElement(currentElements.IndexOf(element)));
+        //set element image
     }
 
     private void DestroyElement(int index)
@@ -29,6 +27,7 @@ public class VerticalScrollColumn : MonoBehaviour
         StartCoroutine(BlockScrolling());
         for (int i = index + 1 ; i < currentElements.Count; i++)
         {
+            currentElements[i].model.inColumnIndex--;
             var elementTransform = currentElements[i].transform;
             var previousElementTransform = currentElements[i - 1].transform;
             elementTransform.DOMoveY(previousElementTransform.position.y, 1f);
