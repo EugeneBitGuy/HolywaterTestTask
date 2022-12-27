@@ -19,7 +19,8 @@ public class SettingsPanel : MonoBehaviour
     {
         closeButton.onClick.AddListener(() =>
         {
-            
+            GameView.PlaySFX("buttonClick");
+
             SwitchVisibility(false);
             StartCoroutine(SetActiveWithDelay(false, 0.5f));
         });
@@ -31,11 +32,15 @@ public class SettingsPanel : MonoBehaviour
         
         musicToggle.onClick.AddListener((() =>
         {
+            GameView.PlaySFX("buttonClick");
+
             SwitchMusic(musicToggle.State);
         }));
         
         sfxToggle.onClick.AddListener((() =>
         {
+            GameView.PlaySFX("buttonClick");
+
             SwitchSFX(sfxToggle.State);
         }));
         

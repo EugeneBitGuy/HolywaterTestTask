@@ -7,13 +7,15 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 public class GameView : MonoBehaviour
 {
     private GameModel _model;
     [SerializeField] private Transform horizontalScroll;
     [SerializeField] private Transform verticalScroll;
-    [SerializeField] private SettingsPanel _settingsPanel;
+    [SerializeField] public SettingsPanel _settingsPanel;
     [SerializeField] private InfoPanel _infoPanel;
 
     [SerializeField] private HorizontalScrollElement _horizontalScrollElementPrefab;
@@ -21,9 +23,12 @@ public class GameView : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button resetButton;
+    [SerializeField] private AudioSource backgroundMusic;
     
     private void Start()
     {
+        backgroundMusic.clip = AssetLoader.AudioClips.FirstOrDefault(clip => clip.name == "BackgroundMusic");
+        backgroundMusic.Play();
         LoadCacheOrCreateNewGame();
         CreateGame();
 
@@ -33,6 +38,8 @@ public class GameView : MonoBehaviour
         
         settingsButton.onClick.AddListener(() =>
         {
+            PlaySFX("buttonClick");
+            
             _settingsPanel.gameObject.SetActive(true);
             _settingsPanel.SwitchVisibility(true);
             _settingsPanel.info.onClick.AddListener(OpenInfoPanel);
@@ -41,12 +48,16 @@ public class GameView : MonoBehaviour
         
         exitButton.onClick.AddListener(() =>
         {
+            PlaySFX("buttonClick");
+
             SaveState();
             Application.Quit();
         });
         
         resetButton.onClick.AddListener(() =>
-        {
+        {            
+            PlaySFX("buttonClick");
+
             _model = GameModel.Default();
             CreateGame();
             SaveState();
@@ -139,6 +150,16 @@ public class GameView : MonoBehaviour
         var verticalElements = verticalScroll.GetComponentsInChildren<VerticalScrollColumn>();
         for (int i = 0; i < verticalElements.Length; i++)
             Destroy(verticalElements[i].gameObject);
+    }
+    
+    public static void PlaySFX(string audioClipName)
+    {
+        AudioSource audioSource = new GameObject().GetOrAddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.clip = AssetLoader.AudioClips.FirstOrDefault(clip => clip.name == audioClipName);
+        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("SFX")[0];
+        audioSource.Play();
+        GameObject.Destroy(audioSource.gameObject, audioSource.clip.length);
     }
     
 }

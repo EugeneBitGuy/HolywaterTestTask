@@ -12,6 +12,7 @@ public class AssetLoader : MonoBehaviour
     private List<AssetBundleCreateRequest> loadProgress = new List<AssetBundleCreateRequest>();
     public static Sprite[] VerticalImages;
     public static Sprite[] HorizontalImages;
+    public static AudioClip[] AudioClips;
 
 
     IEnumerator Start()
@@ -37,7 +38,15 @@ public class AssetLoader : MonoBehaviour
 
         var loadedVerticalImages = verticalImagesRequest.assetBundle;
 
-        if (loadedVerticalImages == null || loadedHorizontalImages == null)
+        var audioClipsRequest = AssetBundle.LoadFromFileAsync(path + "music");
+        
+        loadProgress.Add(audioClipsRequest);
+
+        yield return audioClipsRequest;
+
+        var loadedAudioClips = audioClipsRequest.assetBundle;
+
+        if (loadedVerticalImages == null || loadedHorizontalImages == null || loadedAudioClips == null)
         {
             Debug.LogError("Failed load asset bundles");
             yield break;
@@ -45,9 +54,11 @@ public class AssetLoader : MonoBehaviour
 
         VerticalImages = loadedVerticalImages.LoadAllAssets<Sprite>();
         HorizontalImages = loadedHorizontalImages.LoadAllAssets<Sprite>();
+        AudioClips = loadedAudioClips.LoadAllAssets<AudioClip>();
         
         loadedHorizontalImages.Unload(false);
         loadedVerticalImages.Unload(false);
+        loadedAudioClips.Unload(false);
         //yield return new WaitForSeconds(3);
 
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
