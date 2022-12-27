@@ -10,6 +10,11 @@ public class VerticalScrollElement : MonoBehaviour
     [SerializeField] private ParticleSystem _destroyParticles;
     public VerticalElementModel model;
 
+    private void Start()
+    {
+        GetComponent<Button>().onClick.AddListener(ClickMe);
+    }
+
     public void ClickMe()
     {
         var material = new Material(Shader.Find("Unlit/Texture"));

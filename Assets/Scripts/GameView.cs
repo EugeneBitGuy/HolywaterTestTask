@@ -12,7 +12,7 @@ public class GameView : MonoBehaviour
 {
     private GameModel _model;
     [SerializeField] private Transform horizontalScroll;
-    [SerializeField] private Transform verticalScrollContent;
+    [SerializeField] private Transform verticalScroll;
     [SerializeField] private SettingsPanel _settingsPanel;
     [SerializeField] private InfoPanel _infoPanel;
 
@@ -59,7 +59,7 @@ public class GameView : MonoBehaviour
 
     public void CreateGame()
     {
-        if(verticalScrollContent.childCount > 0 || horizontalScroll.childCount > 0)
+        if(verticalScroll.childCount > 0 || horizontalScroll.childCount > 0)
             DestroyGame();
         
         InstantiateHorizontalScroll();
@@ -75,14 +75,14 @@ public class GameView : MonoBehaviour
             element.image.sprite = AssetLoader.HorizontalImages.FirstOrDefault(img => img.name == GameModel.ImagesOfHorizontalElements[i % 3]);
         }
         
-        horizontalScroll.DOMoveX(_model.HorizontalElementsPosition, Single.MinValue);
+        horizontalScroll.DOMoveX(_model.HorizontalScrollPosition, Single.MinValue);
     }
 
     private void InstantiateVerticalScroll()
     {
         for (int i = 0; i < GameModel.NumberOfColumnsInVerticalScroll; i++)
         {
-            var column = Instantiate(_verticalScrollColumnPrefab, verticalScrollContent);
+            var column = Instantiate(_verticalScrollColumnPrefab, verticalScroll);
             column.columnIndex = i;
             var elementsForThisColumn = _model.verticalElementsModels.Where(model => model.columnIndex == i).ToList();
             for (int j = 0; j < elementsForThisColumn.Count(); j++)
@@ -90,12 +90,16 @@ public class GameView : MonoBehaviour
                 column.InstantiateElement(elementsForThisColumn[j]);
             }
         }
+        
+        verticalScroll.DOMoveY(_model.VerticalScrollPosition, Single.MinValue);
+
     }
 
     public void SaveState()
     {
-        _model.HorizontalElementsPosition = horizontalScroll.position.x;
-        _model.verticalElementsModels = verticalScrollContent.GetComponentsInChildren<VerticalScrollElement>()
+        _model.HorizontalScrollPosition = horizontalScroll.position.x;
+        _model.VerticalScrollPosition = verticalScroll.position.y;
+        _model.verticalElementsModels = verticalScroll.GetComponentsInChildren<VerticalScrollElement>()
             .Select(el => el.model).OrderBy(model => (model.columnIndex, model.inColumnIndex)).ToList();
 
         File.WriteAllText(Application.persistentDataPath + "/GameState.json", JsonUtility.ToJson(_model));
@@ -128,7 +132,7 @@ public class GameView : MonoBehaviour
         for (int i = 0; i < horizontalElements.Length; i++)
             Destroy(horizontalElements[i].gameObject);
         
-        var verticalElements = verticalScrollContent.GetComponentsInChildren<VerticalScrollColumn>();
+        var verticalElements = verticalScroll.GetComponentsInChildren<VerticalScrollColumn>();
         for (int i = 0; i < verticalElements.Length; i++)
             Destroy(verticalElements[i].gameObject);
     }

@@ -17,18 +17,26 @@ public class GameModel
     [NonSerialized] public const int NumberOfElementsInHorizontalScroll = 3;
     [NonSerialized] public static readonly string[] ImagesOfVerticalElements = {"0", "1" , "2", "3" ,"4", "5", "6" , "7", "8", "9", "10" ,"11" , "12", "13" ,"14", "15", "16" , "17", "18", "19", "20", "21" , "22", "23" ,"24", "25", "26" , "27", "28", "29"};
     [NonSerialized] public static readonly string[] ImagesOfHorizontalElements = {"0", "1" , "2"};
-    [SerializeField] private float horizontalElementsPosition;
+    [SerializeField] private float horizontalScrollPosition;
+    [SerializeField] private float verticalScrollPosition;
 
-    public float HorizontalElementsPosition
+    public float HorizontalScrollPosition
     {
-        get => horizontalElementsPosition;
-        set => horizontalElementsPosition = value;
+        get => horizontalScrollPosition;
+        set => horizontalScrollPosition = value;
+    }
+    
+    public float VerticalScrollPosition
+    {
+        get => verticalScrollPosition;
+        set => verticalScrollPosition = value;
     }
 
 
     public GameModel()
     {
-        HorizontalElementsPosition = 0;
+        HorizontalScrollPosition = 0;
+        VerticalScrollPosition = 0;
         CreateNewVerticalElements();
     }
 

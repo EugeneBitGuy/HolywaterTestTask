@@ -23,7 +23,7 @@ public class VerticalScrollColumn : MonoBehaviour
 
     private void DestroyElement(int index)
     {
-        StartCoroutine(BlockScrolling());
+        StartCoroutine(BlockClicks());
         for (int i = index + 1 ; i < currentElements.Count; i++)
         {
             currentElements[i].model.inColumnIndex--;
@@ -34,10 +34,13 @@ public class VerticalScrollColumn : MonoBehaviour
         currentElements.RemoveAt(index);
     }
 
-    private IEnumerator BlockScrolling()
+    private IEnumerator BlockClicks()
     {
         GetComponentInParent<ScrollRect>().vertical = false;
+        GetComponentInParent<CanvasGroup>().interactable = false;
         yield return new WaitForSeconds(1f);
+        GetComponentInParent<CanvasGroup>().interactable = true;
         GetComponentInParent<ScrollRect>().vertical = true;
+
     }
 }

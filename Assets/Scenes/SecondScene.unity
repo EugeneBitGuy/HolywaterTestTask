@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalScroll: {fileID: 64407164}
-  verticalScrollContent: {fileID: 1857888429}
+  verticalScroll: {fileID: 1857888429}
   _settingsPanel: {fileID: 562906742}
   _infoPanel: {fileID: 107719519}
   _horizontalScrollElementPrefab: {fileID: 5747226293777609504, guid: 3b8f569ad9213ea49beb7842a1bc56c3, type: 3}
@@ -1360,6 +1360,7 @@ GameObject:
   - component: {fileID: 630752818}
   - component: {fileID: 630752817}
   - component: {fileID: 630752816}
+  - component: {fileID: 630752820}
   m_Layer: 5
   m_Name: VerticalScroll
   m_TagString: Untagged
@@ -1470,6 +1471,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &630752820
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630752814}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &724816690
 GameObject:
   m_ObjectHideFlags: 0
