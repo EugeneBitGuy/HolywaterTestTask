@@ -17,9 +17,9 @@ public class VerticalScrollElement : MonoBehaviour
 
     public void ClickMe()
     {
-        var material = new Material(Shader.Find("Unlit/Texture"));
+        var material = new Material(Shader.Find(_destroyParticles.GetComponent<ParticleSystemRenderer>().material.shader.name));
         material.mainTexture = GetComponent<Image>().sprite.texture;
-        _destroyParticles.GetComponent<Renderer>().material = material;
+        _destroyParticles.GetComponent<ParticleSystemRenderer>().material = material;
         Instantiate(_destroyParticles, this.gameObject.transform);
         this.GetComponent<Image>().DOFade(0, 1f);
         Destroy(this.gameObject, 1f);
