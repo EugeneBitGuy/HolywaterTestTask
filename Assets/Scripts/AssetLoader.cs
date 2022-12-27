@@ -45,11 +45,14 @@ public class AssetLoader : MonoBehaviour
 
         VerticalImages = loadedVerticalImages.LoadAllAssets<Sprite>();
         HorizontalImages = loadedHorizontalImages.LoadAllAssets<Sprite>();
-
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
         
         loadedHorizontalImages.Unload(false);
         loadedVerticalImages.Unload(false);
+        //yield return new WaitForSeconds(3);
+
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+        
+        
 
     }
     
