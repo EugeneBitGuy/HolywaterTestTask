@@ -14,8 +14,9 @@ public class GameModel
     public List<VerticalElementModel> verticalElementsModels;
     [NonSerialized] public const int NumberOfElementsInColumnOfVerticalScroll = 10;
     [NonSerialized] public const int NumberOfColumnsInVerticalScroll = 3;
-    [NonSerialized] public static readonly string[] ImagesOfVerticalElements = {"1" , "2", "3" ,"4", "5", "6" };
-    [NonSerialized] static Random _random = new Random();
+    [NonSerialized] public const int NumberOfElementsInHorizontalScroll = 3;
+    [NonSerialized] public static readonly string[] ImagesOfVerticalElements = {"0", "1" , "2", "3" ,"4", "5", "6" , "7", "8", "9", "10" ,"11" , "12", "13" ,"14", "15", "16" , "17", "18", "19", "20", "21" , "22", "23" ,"24", "25", "26" , "27", "28", "29"};
+    [NonSerialized] public static readonly string[] ImagesOfHorizontalElements = {"0", "1" , "2"};
     [SerializeField] private float horizontalElementsPosition;
 
     public float HorizontalElementsPosition
@@ -47,7 +48,7 @@ public class GameModel
         {
             for (int elIdx = 0; elIdx < NumberOfElementsInColumnOfVerticalScroll; elIdx++)
             {
-                var imageName = _random.Next(1, 41).ToString()/*ImagesOfVerticalElements[_random.Next(ImagesOfVerticalElements.Length)]*/;
+                var imageName = ImagesOfVerticalElements[colIdx * NumberOfColumnsInVerticalScroll + elIdx];
                 verticalElementsModels.Add(new VerticalElementModel(imageName, colIdx, elIdx));
             }
         }

@@ -17,9 +17,8 @@ public class VerticalScrollColumn : MonoBehaviour
         var element = Instantiate(_elementPrefab, transform);
         element.model = model;
         currentElements.Add(element);
-        element.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Images/VerticalImages/{model.imageName}");
+        element.GetComponent<Image>().sprite = AssetLoader.VerticalImages.FirstOrDefault(img => img.name == model.imageName);
         element.GetComponent<Button>().onClick.AddListener(() => DestroyElement(currentElements.IndexOf(element)));
-        //set element image
     }
 
     private void DestroyElement(int index)

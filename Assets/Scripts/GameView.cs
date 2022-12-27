@@ -10,8 +10,6 @@ using System.IO;
 
 public class GameView : MonoBehaviour
 {
-    public static readonly Color[] horizontalElementsColors = new[] {Color.red, Color.blue, Color.green,};
-    public const int HorizontalElementsNumber = 3;
     private GameModel _model;
     [SerializeField] private Transform horizontalScroll;
     [SerializeField] private Transform verticalScrollContent;
@@ -70,21 +68,19 @@ public class GameView : MonoBehaviour
 
     private void InstantiateHorizontalScroll()
     {
-        for (int i = 0; i < HorizontalElementsNumber + 1; i++)
+        for (int i = 0; i < GameModel.NumberOfElementsInHorizontalScroll + 1; i++)
         {
             var element = Instantiate(_horizontalScrollElementPrefab, horizontalScroll);
 
-            element.image.sprite = Resources.Load<Sprite>($"Images/HorizontalImages/{i % 3}");
+            element.image.sprite = AssetLoader.HorizontalImages.FirstOrDefault(img => img.name == GameModel.ImagesOfHorizontalElements[i % 3]);
         }
-
-        /*var horizontalScrollPosition = horizontalScroll.position;
-        horizontalScrollPosition.x = _model.HorizontalElementsPosition;*/
+        
         horizontalScroll.DOMoveX(_model.HorizontalElementsPosition, Single.MinValue);
     }
 
     private void InstantiateVerticalScroll()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < GameModel.NumberOfColumnsInVerticalScroll; i++)
         {
             var column = Instantiate(_verticalScrollColumnPrefab, verticalScrollContent);
             column.columnIndex = i;

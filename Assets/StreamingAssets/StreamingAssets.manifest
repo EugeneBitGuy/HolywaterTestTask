@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 3984458649
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: testtaskbundle/horizontal-images
+      Dependencies: {}
+    Info_1:
+      Name: testtaskbundle/vertical-images
+      Dependencies: {}
