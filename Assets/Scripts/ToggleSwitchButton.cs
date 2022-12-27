@@ -10,23 +10,22 @@ public class ToggleSwitchButton : Button
 {
 
     public Sprite[] stateSprites;
-    public bool State { get; private set; }
+    public bool State { get;  set; }
 
     protected override void Start()
     {
         base.Start();
-        State = true;
-        BrushImage(State);
+        SetIcon(State);
     }
     
     public override void OnPointerClick(PointerEventData eventData)
     {
         State = !State;
         base.OnPointerClick(eventData);
-        BrushImage(State);
+        SetIcon(State);
     }
 
-    private void BrushImage(bool state)
+    public void SetIcon(bool state)
     {
         GetComponent<Image>().sprite = stateSprites[state ? 0 : 1];
     }

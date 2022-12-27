@@ -12,8 +12,8 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private ToggleSwitchButton musicToggle;
     [SerializeField] private ToggleSwitchButton sfxToggle;
-    [SerializeField] public Button info;
-    [SerializeField] private AudioMixer mixer;
+    public Button info;
+    public AudioMixer mixer;
 
     private void Start()
     {
@@ -23,6 +23,11 @@ public class SettingsPanel : MonoBehaviour
             SwitchVisibility(false);
             StartCoroutine(SetActiveWithDelay(false, 0.5f));
         });
+
+        musicToggle.State = PlayerPrefs.GetFloat("Music") == 0;
+        musicToggle.SetIcon(musicToggle.State);
+        sfxToggle.State = PlayerPrefs.GetFloat("SFX") == 0;
+        sfxToggle.SetIcon(sfxToggle.State);
         
         musicToggle.onClick.AddListener((() =>
         {
@@ -45,11 +50,14 @@ public class SettingsPanel : MonoBehaviour
     void SwitchMusic(bool state)
     {
         mixer.DOSetFloat("Music", state ? 0 : -80, 0.2f);
+        PlayerPrefs.SetFloat("Music", state ? 0 : -80);
     }
 
     void SwitchSFX(bool state)
     {
         mixer.DOSetFloat("SFX", state ? 0 : -80, 0.2f);
+        PlayerPrefs.SetFloat("SFX", state ? 0 : -80);
+
     }
 
     public void SwitchVisibility(bool isVisible)

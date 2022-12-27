@@ -26,6 +26,10 @@ public class GameView : MonoBehaviour
     {
         LoadCacheOrCreateNewGame();
         CreateGame();
+
+        _settingsPanel.mixer.SetFloat("Music", PlayerPrefs.GetFloat("Music"));
+        _settingsPanel.mixer.SetFloat("SFX", PlayerPrefs.GetFloat("SFX"));
+
         
         settingsButton.onClick.AddListener(() =>
         {
