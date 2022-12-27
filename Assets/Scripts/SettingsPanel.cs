@@ -54,13 +54,13 @@ public class SettingsPanel : MonoBehaviour
 
     void SwitchMusic(bool state)
     {
-        mixer.DOSetFloat("Music", state ? 0 : -80, 0.2f);
+        mixer.DOSetFloat("Music", state ? 0 : -80, 1f);
         PlayerPrefs.SetFloat("Music", state ? 0 : -80);
     }
 
     void SwitchSFX(bool state)
     {
-        mixer.DOSetFloat("SFX", state ? 0 : -80, 0.2f);
+        mixer.DOSetFloat("SFX", state ? 0 : -80, 1f);
         PlayerPrefs.SetFloat("SFX", state ? 0 : -80);
 
     }
