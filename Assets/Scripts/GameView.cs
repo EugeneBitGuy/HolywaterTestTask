@@ -16,6 +16,7 @@ public class GameView : MonoBehaviour
     [SerializeField] private Transform horizontalScroll;
     [SerializeField] private Transform verticalScrollContent;
     [SerializeField] private SettingsPanel _settingsPanel;
+    [SerializeField] private InfoPanel _infoPanel;
 
     [SerializeField] private HorizontalScrollElement _horizontalScrollElementPrefab;
     [SerializeField] private VerticalScrollColumn _verticalScrollColumnPrefab;
@@ -32,7 +33,9 @@ public class GameView : MonoBehaviour
         {
             _settingsPanel.gameObject.SetActive(true);
             _settingsPanel.SwitchVisibility(true);
+            _settingsPanel.info.onClick.AddListener(OpenInfoPanel);
         });
+        
         
         exitButton.onClick.AddListener(() =>
         {
@@ -46,6 +49,14 @@ public class GameView : MonoBehaviour
             CreateGame();
             SaveState();
         });
+
+        OpenInfoPanel();
+    }
+
+    public void OpenInfoPanel()
+    {
+        _infoPanel.gameObject.SetActive(true);
+        _infoPanel.SwitchVisibility(true);
     }
 
     public void CreateGame()

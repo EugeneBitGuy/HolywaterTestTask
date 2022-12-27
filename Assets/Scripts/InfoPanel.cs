@@ -1,20 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class SettingsPanel : MonoBehaviour
+public class InfoPanel : MonoBehaviour
 {
     [SerializeField] private Button closeButton;
-    [SerializeField] private ToggleSwitchButton musicToggle;
-    [SerializeField] private ToggleSwitchButton sfxToggle;
-    [SerializeField] public Button info;
-    [SerializeField] private AudioMixer mixer;
-
+    [SerializeField] private Button socialLinkButton;
     private void Start()
     {
         closeButton.onClick.AddListener(() =>
@@ -24,34 +17,18 @@ public class SettingsPanel : MonoBehaviour
             StartCoroutine(SetActiveWithDelay(false, 0.5f));
         });
         
-        musicToggle.onClick.AddListener((() =>
+        socialLinkButton.onClick.AddListener(() =>
         {
-            SwitchMusic(musicToggle.State);
-        }));
-        
-        sfxToggle.onClick.AddListener((() =>
-        {
-            SwitchSFX(sfxToggle.State);
-        }));
-        
+            Application.OpenURL("https://www.linkedin.com/in/yevhenii-postoienko-29882b228/");
+        });
     }
-
+    
     private IEnumerator SetActiveWithDelay(bool isActive, float delay)
     {
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(isActive);
     }
-
-    void SwitchMusic(bool state)
-    {
-        mixer.DOSetFloat("Music", state ? 0 : -80, 0.2f);
-    }
-
-    void SwitchSFX(bool state)
-    {
-        mixer.DOSetFloat("SFX", state ? 0 : -80, 0.2f);
-    }
-
+    
     public void SwitchVisibility(bool isVisible)
     {
         var fadeValue = isVisible ? 1 : 0;
@@ -59,6 +36,3 @@ public class SettingsPanel : MonoBehaviour
         GetComponent<CanvasGroup>().DOFade(fadeValue, 0.5f);
     }
 }
-
-
-
