@@ -12,7 +12,7 @@ public class InfoPanel : MonoBehaviour
     {
         closeButton.onClick.AddListener(() =>
         {
-            GameView.PlaySFX("buttonClick");
+            Extensions.PlaySFX("buttonClick");
 
             SwitchVisibility(false);
             StartCoroutine(SetActiveWithDelay(false, 0.5f));

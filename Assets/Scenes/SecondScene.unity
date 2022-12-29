@@ -939,11 +939,11 @@ MonoBehaviour:
   verticalScroll: {fileID: 1857888429}
   _settingsPanel: {fileID: 562906742}
   _infoPanel: {fileID: 107719519}
-  _horizontalScrollElementPrefab: {fileID: 5747226293777609504, guid: 3b8f569ad9213ea49beb7842a1bc56c3, type: 3}
-  _verticalScrollColumnPrefab: {fileID: 3782447071626903588, guid: 36176828fd3068a4fb56ca38f18d5210, type: 3}
   settingsButton: {fileID: 1932472994}
   exitButton: {fileID: 724816692}
   resetButton: {fileID: 907448083}
+  _horizontalScrollElementPrefab: {fileID: 5747226293777609504, guid: 3b8f569ad9213ea49beb7842a1bc56c3, type: 3}
+  _verticalScrollColumnPrefab: {fileID: 3782447071626903588, guid: 36176828fd3068a4fb56ca38f18d5210, type: 3}
   backgroundMusic: {fileID: 1331413046}
 --- !u!82 &379088817
 AudioSource:
@@ -3855,7 +3855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Holywater Test Task
+  m_text: Holy Water Test Task
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

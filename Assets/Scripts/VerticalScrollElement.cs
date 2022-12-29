@@ -16,17 +16,25 @@ public class VerticalScrollElement : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(ClickMe);
     }
 
-    public void ClickMe()
+    private void ClickMe()
     {
-        GameView.PlaySFX("buttonClick");
+        Extensions.PlaySFX("buttonClick");
+        InstantiateDestroyParticles();
+        FadeObject();
+    }
 
+    void InstantiateDestroyParticles()
+    {
         var material = new Material(Shader.Find(_destroyParticles.GetComponent<ParticleSystemRenderer>().sharedMaterial.shader.name));
         material.mainTexture = GetComponent<Image>().sprite.texture;
         _destroyParticles.GetComponent<ParticleSystemRenderer>().sharedMaterial = material;
-        Instantiate(_destroyParticles, this.gameObject.transform);
-        this.GetComponent<Image>().DOFade(0, 1f);
+        Instantiate(_destroyParticles, gameObject.transform);
+    }
+
+    void FadeObject()
+    {
+        GetComponent<Image>().DOFade(0, 1f);
         Destroy(this.gameObject, 1f);
     }
-    
 
 }

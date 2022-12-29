@@ -70,6 +70,9 @@ public class AssetLoader : MonoBehaviour
 
     private void Update()
     {
+        if(loadProgress == null)
+            return;
+        
         var progress = 0f;
         foreach (var proccess in loadProgress)
         {

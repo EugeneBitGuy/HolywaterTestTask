@@ -10,13 +10,15 @@ using Random = System.Random;
 [Serializable]
 public class GameModel
 {
-
-    public List<VerticalElementModel> verticalElementsModels;
+    #region GameConfig
+    [NonSerialized] public static readonly string[] ImagesOfVerticalElements = {"0", "1" , "2", "3" ,"4", "5", "6" , "7", "8", "9", "10" ,"11" , "12", "13" ,"14", "15", "16" , "17", "18", "19", "20", "21" , "22", "23" ,"24", "25", "26" , "27", "28", "29"};
+    [NonSerialized] public static readonly string[] ImagesOfHorizontalElements = {"0", "1" , "2"};
     [NonSerialized] public const int NumberOfElementsInColumnOfVerticalScroll = 10;
     [NonSerialized] public const int NumberOfColumnsInVerticalScroll = 3;
     [NonSerialized] public const int NumberOfElementsInHorizontalScroll = 3;
-    [NonSerialized] public static readonly string[] ImagesOfVerticalElements = {"0", "1" , "2", "3" ,"4", "5", "6" , "7", "8", "9", "10" ,"11" , "12", "13" ,"14", "15", "16" , "17", "18", "19", "20", "21" , "22", "23" ,"24", "25", "26" , "27", "28", "29"};
-    [NonSerialized] public static readonly string[] ImagesOfHorizontalElements = {"0", "1" , "2"};
+    #endregion
+    
+    public List<VerticalElementModel> verticalElementsModels;
     [SerializeField] private float horizontalScrollPosition;
     [SerializeField] private float verticalScrollPosition;
 
@@ -45,7 +47,7 @@ public class GameModel
         return new GameModel();
     }
 
-    public void CreateNewVerticalElements()
+    private void CreateNewVerticalElements()
     {
         if (verticalElementsModels != null)
             verticalElementsModels.Clear();

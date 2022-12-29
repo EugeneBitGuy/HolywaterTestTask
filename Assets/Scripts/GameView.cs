@@ -13,23 +13,30 @@ using UnityEngine.Audio;
 public class GameView : MonoBehaviour
 {
     private GameModel _model;
+
+    #region Canvas
     [SerializeField] private Transform horizontalScroll;
     [SerializeField] private Transform verticalScroll;
     [SerializeField] public SettingsPanel _settingsPanel;
     [SerializeField] private InfoPanel _infoPanel;
-
-    [SerializeField] private HorizontalScrollElement _horizontalScrollElementPrefab;
-    [SerializeField] private VerticalScrollColumn _verticalScrollColumnPrefab;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button resetButton;
+    #endregion
+
+    #region Prefabs
+    [SerializeField] private HorizontalScrollElement _horizontalScrollElementPrefab;
+    [SerializeField] private VerticalScrollColumn _verticalScrollColumnPrefab;
+    #endregion
+    
+    
     [SerializeField] private AudioSource backgroundMusic;
     
     private void Start()
     {
         backgroundMusic.clip = AssetLoader.AudioClips.FirstOrDefault(clip => clip.name == "BackgroundMusic");
         backgroundMusic.Play();
-        LoadCacheOrCreateNewGame();
+        LoadCacheOrCreateNewGameModel();
         CreateGame();
 
         _settingsPanel.mixer.SetFloat("Music", PlayerPrefs.GetFloat("Music"));
@@ -38,7 +45,7 @@ public class GameView : MonoBehaviour
         
         settingsButton.onClick.AddListener(() =>
         {
-            PlaySFX("buttonClick");
+            Extensions.PlaySFX("buttonClick");
             
             _settingsPanel.gameObject.SetActive(true);
             _settingsPanel.SwitchVisibility(true);
@@ -48,7 +55,7 @@ public class GameView : MonoBehaviour
         
         exitButton.onClick.AddListener(() =>
         {
-            PlaySFX("buttonClick");
+            Extensions.PlaySFX("buttonClick");
 
             SaveState();
             Application.Quit();
@@ -56,7 +63,7 @@ public class GameView : MonoBehaviour
         
         resetButton.onClick.AddListener(() =>
         {            
-            PlaySFX("buttonClick");
+            Extensions.PlaySFX("buttonClick");
 
             _model = GameModel.Default();
             CreateGame();
@@ -66,13 +73,13 @@ public class GameView : MonoBehaviour
         OpenInfoPanel();
     }
 
-    public void OpenInfoPanel()
+    private void OpenInfoPanel()
     {
         _infoPanel.gameObject.SetActive(true);
         _infoPanel.SwitchVisibility(true);
     }
 
-    public void CreateGame()
+    private void CreateGame()
     {
         if(verticalScroll.childCount > 0 || horizontalScroll.childCount > 0)
             DestroyGame();
@@ -98,7 +105,6 @@ public class GameView : MonoBehaviour
         for (int i = 0; i < GameModel.NumberOfColumnsInVerticalScroll; i++)
         {
             var column = Instantiate(_verticalScrollColumnPrefab, verticalScroll);
-            column.columnIndex = i;
             var elementsForThisColumn = _model.verticalElementsModels.Where(model => model.columnIndex == i).ToList();
             for (int j = 0; j < elementsForThisColumn.Count(); j++)
             {
@@ -110,7 +116,7 @@ public class GameView : MonoBehaviour
 
     }
 
-    public void SaveState()
+    private void SaveState()
     {
         _model.HorizontalScrollPosition = horizontalScroll.position.x;
         _model.VerticalScrollPosition = verticalScroll.position.y;
@@ -126,7 +132,7 @@ public class GameView : MonoBehaviour
             SaveState();
     }
 
-    private void LoadCacheOrCreateNewGame()
+    private void LoadCacheOrCreateNewGameModel()
     {
         bool hasSavedState = File.Exists(Application.persistentDataPath + "/GameState.json");
 
@@ -152,14 +158,6 @@ public class GameView : MonoBehaviour
             Destroy(verticalElements[i].gameObject);
     }
     
-    public static void PlaySFX(string audioClipName)
-    {
-        AudioSource audioSource = new GameObject().GetOrAddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.clip = AssetLoader.AudioClips.FirstOrDefault(clip => clip.name == audioClipName);
-        audioSource.outputAudioMixerGroup = Resources.Load<AudioMixer>("Mixer").FindMatchingGroups("SFX")[0];
-        audioSource.Play();
-        GameObject.Destroy(audioSource.gameObject, audioSource.clip.length);
-    }
+
     
 }

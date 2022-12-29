@@ -39,10 +39,11 @@ public class LoopScrollRect : ScrollRect
             
             Vector2 min = m_ContentBounds.min;
             Vector2 max = m_ContentBounds.max;
-    
-    
-            float maxOffset = viewRect.rect.max.x - max.x;
-            float minOffset = viewRect.rect.min.x - min.x;
+
+
+            var rect = viewRect.rect;
+            float maxOffset = rect.max.x - max.x;
+            float minOffset = rect.min.x - min.x;
     
             if (minOffset < -0.001f)
             {
@@ -64,7 +65,6 @@ public class LoopScrollRect : ScrollRect
             base.LateUpdate();
             if (hasOverflow)
             {
-                /*SetContentAnchoredPosition(content.anchoredPosition);*/
                 velocity = vel;
             }
             

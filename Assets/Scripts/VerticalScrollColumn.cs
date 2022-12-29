@@ -10,7 +10,6 @@ public class VerticalScrollColumn : MonoBehaviour
 {
     [SerializeField] private VerticalScrollElement _elementPrefab;
     public List<VerticalScrollElement> currentElements = new List<VerticalScrollElement>();
-    public int columnIndex;
 
     public void InstantiateElement(VerticalElementModel model)
     {
